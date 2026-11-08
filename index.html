@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#06070c" />
+<meta name="description" content="Alex Rivera — full-stack developer crafting clean, accessible, high-performance web experiences." />
+<title>Alex Rivera — Full-Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root {
+    --bg: #06070c;
+    --bg-soft: #0a0c13;
+    --surface: rgba(255, 255, 255, 0.035);
+    --border: rgba(255, 255, 255, 0.085);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text: #eef1f8;
+    --muted: #98a2b8;
+    --muted-2: #78829a;
+    --accent: #7c8cff;
+    --accent-2: #22d3ee;
+    --accent-3: #c084fc;
+    --gradient: linear-gradient(135deg, #7c8cff 0%, #22d3ee 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(124, 140, 255, 0.18), rgba(34, 211, 238, 0.12));
+    --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-head: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+    --radius: 18px;
+    --radius-lg: 26px;
+    --container: 1180px;
+    --ease: cubic-bezier(0.22, 0.68, 0.24, 1);
+    --shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.75);
+  }
+
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(900px 600px at 12% -8%, rgba(124, 140, 255, 0.14), transparent 62%),
+      radial-gradient(800px 520px at 92% 4%, rgba(34, 211, 238, 0.09), transparent 60%),
+      radial-gradient(900px 700px at 60% 108%, rgba(192, 132, 252, 0.08), transparent 62%);
+    pointer-events: none;
+  }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 20%, transparent 82%);
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 20%, transparent 82%);
+    pointer-events: none;
+  }
+
+  ::selection { background: rgba(124, 140, 255, 0.35); color: #fff; }
+
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button, input, textarea, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 6px; }
+
+  ::-webkit-scrollbar { width: 11px; }
+  ::-webkit-scrollbar-track { background: #070810; }
+  ::-webkit-scrollbar-thumb { background: #232a3d; border-radius: 20px; border: 2px solid #070810; }
+  ::-webkit-scrollbar-thumb:hover { background: #303a54; }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-head);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+
+  .container {
+    width: min(var(--container), calc(100% - 48px));
+    margin-inline: auto;
+  }
+
+  .skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 500;
+    padding: 10px 18px;
+    border-radius: 10px;
+    background: var(--accent-2);
+    color: #04121a;
+    font-weight: 600;
+    transform: translateY(-160%);
+    transition: transform 0.25s var(--ease);
+  }
+  .skip-link:focus { transform: translateY(0); }
+
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: var(--gradient);
+    z-index: 300;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.6);
+  }
+
+  .grad {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-2), transparent);
+  }
+
+  .section {
+    position: relative;
+    padding: clamp(76px, 9vw, 128px) 0;
+    scroll-margin-top: 88px;
+  }
+  .section-head { max-width: 760px; margin-bottom: clamp(40px, 5vw, 64px); }
+  .section-head h2 { font-size: clamp(1.95rem, 4.2vw, 3.1rem); margin-bottom: 18px; }
+  .section-head p { color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.08rem); max-width: 60ch; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease);
+    white-space: nowrap;
+  }
+  .btn svg { width: 18px; height: 18px; }
+  .btn-primary {
+    background: var(--gradient);
+    color: #05070d;
+    box-shadow: 0 14px 34px -12px rgba(80, 130, 255, 0.65);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -12px rgba(70, 160, 255, 0.72); }
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.035);
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .btn-ghost:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.07); border-color: rgba(124, 140, 255, 0.5); }
+  .btn-sm { padding: 11px 18px; font-size: 0.9rem; border-radius: 10px; }
+
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 200;
+    padding: 18px 0;
+    transition: padding 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  .site-header.scrolled {
+    padding: 11px 0;
+    background: rgba(6, 7, 12, 0.72);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    border-bottom-color: var(--border);
+  }
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; }
+
+  .brand { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-head); font-weight: 600; font-size: 1.06rem; letter-spacing: -0.02em; }
+  .brand-mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--gradient);
+    color: #05070d;
+    font-weight: 700;
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    box-shadow: 0 10px 26px -10px rgba(80, 140, 255, 0.7);
+    transition: transform 0.3s var(--ease);
+  }
+  .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
+  .brand-text span { color: var(--muted); }
+
+  .nav { display: flex; align-items: center; gap: 26px; }
+  .nav ul { display: flex; align-items: center; gap: 4px; }
+  .nav-link {
+    position: relative;
+    display: inline-block;
+    padding: 9px 13px;
+    border-radius: 9px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.22s var(--ease), background 0.22s var(--ease);
+  }
+  .nav-link:hover { color: var(--text); background: rgba(255, 255, 255, 0.045); }
+  .nav-link.active { color: var(--text); }
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 13px;
+    right: 13px;
+    bottom: 3px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--gradient);
+  }
+  .nav-cta { margin-left: 6px; }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0 11px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .nav-toggle span { display: block; height: 2px; width: 100%; border-radius: 2px; background: var(--text); transition: transform 0.28s var(--ease), opacity 0.2s var(--ease); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 132px 0 84px;
+    overflow: hidden;
+  }
+  .hero-orbs { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: drift 18s ease-in-out infinite alternate; }
+  .orb-1 { width: 420px; height: 420px; background: rgba(124, 140, 255, 0.32); top: 2%; left: -8%; }
+  .orb-2 { width: 360px; height: 360px; background: rgba(34, 211, 238, 0.22); top: 32%; right: -6%; animation-delay: -6s; }
+  .orb-3 { width: 300px; height: 300px; background: rgba(192, 132, 252, 0.2); bottom: -10%; left: 40%; animation-delay: -11s; }
+  @keyframes drift {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(28px, -36px, 0) scale(1.12); }
+  }
+
+  .hero-grid { display: grid; grid-template-columns: 1.06fr 0.94fr; align-items: center; gap: clamp(36px, 5vw, 72px); }
+  .hero-copy { max-width: 620px; }
+
+  .hero-role {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    color: #cfd6e6;
+    margin-bottom: 26px;
+  }
+  .status-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.16);
+    flex: none;
+  }
+  .status-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(52, 211, 153, 0.55);
+    animation: pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.9; }
+    100% { transform: scale(2.1); opacity: 0; }
+  }
+  .role-text { display: inline-block; min-width: 20ch; transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); }
+  .role-text.swap { opacity: 0; transform: translateY(7px); }
+
+  .hero h1 { font-size: clamp(2.55rem, 6vw, 4.5rem); line-height: 1.03; letter-spacing: -0.035em; margin-bottom: 24px; }
+  .hero h1 .grad { display: inline-block; }
+  .hero-lead { color: var(--muted); font-size: clamp(1rem, 1.5vw, 1.12rem); max-width: 54ch; margin-bottom: 34px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 40px; }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 26px;
+    padding-top: 26px;
+    border-top: 1px solid var(--border);
+    color: var(--muted-2);
+    font-size: 0.86rem;
+  }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .hero-meta svg { width: 16px; height: 16px; color: var(--accent-2); }
+
+  .hero-visual { position: relative; }
+  .code-card {
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid var(--border-strong);
+    background: linear-gradient(160deg, rgba(19, 23, 36, 0.96), rgba(9, 11, 18, 0.98));
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    transform: perspective(1200px) rotateY(-6deg) rotateX(3deg);
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  }
+  .hero-visual:hover .code-card { transform: perspective(1200px) rotateY(-2deg) rotateX(1deg) translateY(-4px); box-shadow: 0 34px 80px -30px rgba(0, 0, 0, 0.9), 0 0 70px -30px rgba(124, 140, 255, 0.55); }
+  .code-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, rgba(124, 140, 255, 0.55), transparent 40%, rgba(34, 211, 238, 0.4));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .code-top { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: rgba(255, 255, 255, 0.025); }
+  .code-dots { display: flex; gap: 6px; }
+  .code-dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .code-dots i:nth-child(1) { background: #ff5f57; }
+  .code-dots i:nth-child(2) { background: #febc2e; }
+  .code-dots i:nth-child(3) { background: #28c840; }
+  .code-file { margin-left: 6px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted-2); letter-spacing: 0.03em; }
+  .code-body { padding: 20px 20px 24px; overflow-x: auto; }
+  .code { margin: 0; font-family: var(--font-mono); font-size: 0.79rem; line-height: 1.85; color: #c9d1e6; white-space: pre; }
+  .code .num { display: inline-block; width: 2.1em; color: #3a4260; user-select: none; }
+  .tok-key { color: #c084fc; }
+  .tok-var { color: #7dd3fc; }
+  .tok-str { color: #86efac; }
+  .tok-fn { color: #fbbf24; }
+  .tok-punc { color: #64748b; }
+  .tok-com { color: #4b5673; font-style: italic; }
+
+  .float-badge {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: rgba(13, 16, 24, 0.9);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #d7dded;
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.85);
+    animation: float 6s ease-in-out infinite;
+    z-index: 2;
+  }
+  .float-badge svg { width: 16px; height: 16px; color: var(--accent-2); flex: none; }
+  .float-badge.one { top: -22px; right: 14px; animation-delay: -1s; }
+  .float-badge.two { bottom: -20px; left: -10px; animation-delay: -3.4s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-11px); }
+  }
+
+  .reveal { transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
+  .js .reveal { opacity: 0; transform: translateY(22px); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
+  .about-copy p { color: var(--muted); margin-bottom: 18px; font-size: 1.02rem; max-width: 62ch; }
+  .about-copy strong { color: var(--text); font-weight: 600; }
+  .about-list { display: grid; gap: 12px; margin-top: 28px; }
+  .about-list li { display: flex; align-items: flex-start; gap: 12px; color: #c3cbdc; font-size: 0.96rem; }
+  .check {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    flex: none;
+    margin-top: 1px;
+  }
+  .check svg { width: 13px; height: 13px; color: var(--accent-2); }
+
+  .profile-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012));
+    padding: 28px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .profile-card::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(124, 140, 255, 0.3), transparent 70%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
+  .avatar-wrap { display: flex; align-items: center; gap: 16px; margin-bottom: 26px; }
+  .avatar {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.24), transparent 45%),
+      linear-gradient(135deg, #7c8cff, #22d3ee);
+    color: #05070d;
+    font-family: var(--font-head);
+    font-size: 1.35rem;
+    font-weight: 700;
+    flex: none;
+    box-shadow: 0 14px 30px -12px rgba(90, 150, 255, 0.7);
+  }
+  .avatar::after { content: ""; position: absolute; inset: -5px; border-radius: 26px; border: 1px solid rgba(124, 140, 255, 0.3); }
+  .avatar-meta strong { display: block; font-family: var(--font-head); font-size: 1.1rem; }
+  .avatar-meta span { color: var(--muted); font-size: 0.85rem; }
+
+  .fact-list { display: grid; gap: 2px; }
+  .fact { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  .fact:last-child { border-bottom: 0; padding-bottom: 0; }
+  .fact dt { color: var(--muted-2); }
+  .fact dd { margin: 0; color: #dbe1ee; text-align: right; font-weight: 500; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .skill-card {
+    position: relative;
+    padding: 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: linear-gradient(170deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .skill-card:hover { border-color: rgba(124, 140, 255, 0.38); transform: translateY(-3px); }
+  .skill-card h3 { display: flex; align-items: center; gap: 10px; font-size: 1.06rem; margin-bottom: 24px; }
+  .skill-card h3 svg { width: 19px; height: 19px; color: var(--accent-2); }
+  .skill-row { margin-bottom: 20px; }
+  .skill-row:last-child { margin-bottom: 0; }
+  .skill-label { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 9px; font-size: 0.88rem; }
+  .skill-label b { font-weight: 500; color: #d8dfee; }
+  .skill-label span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted-2); letter-spacing: 0.04em; }
+  .bar { height: 6px; border-radius: 999px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+  .bar-fill {
+    display: block;
+    height: 100%;
+    width: var(--level, 80%);
+    border-radius: inherit;
+    background: var(--gradient);
+    transform-origin: left;
+    transform: scaleX(1);
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.35);
+  }
+  .js .reveal .bar-fill { transform: scaleX(0); transition: transform 1.15s var(--ease); }
+  .js .reveal.in .bar-fill { transform: scaleX(1); }
+
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: linear-gradient(170deg, rgba(255, 255, 255, 0.042), rgba(255, 255, 255, 0.012));
+    overflow: hidden;
+    transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  }
+  .service-card:hover { transform: translateY(-5px); border-color: rgba(124, 140, 255, 0.42); box-shadow: 0 26px 60px -30px rgba(70, 120, 255, 0.5); }
+  .spot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(124, 140, 255, 0.14), transparent 62%);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    pointer-events: none;
+  }
+  .spot:hover::after { opacity: 1; }
+  .icon-box {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: var(--gradient-soft);
+    border: 1px solid rgba(124, 140, 255, 0.22);
+    margin-bottom: 22px;
+    color: var(--accent-2);
+    transition: transform 0.35s var(--ease);
+  }
+  .service-card:hover .icon-box { transform: translateY(-3px) scale(1.04); }
+  .icon-box svg { width: 23px; height: 23px; }
+  .service-card h3 { font-size: 1.12rem; margin-bottom: 12px; }
+  .service-card p { color: var(--muted); font-size: 0.93rem; margin-bottom: 22px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
+  .chip {
+    padding: 5px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+  }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: linear-gradient(170deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .project-card:hover { transform: translateY(-6px); border-color: rgba(124, 140, 255, 0.42); box-shadow: 0 34px 70px -34px rgba(70, 120, 255, 0.55); }
+  .thumb { position: relative; height: 208px; overflow: hidden; border-bottom: 1px solid var(--border); }
+  .thumb::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 34px 34px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000, transparent 76%);
+    mask-image: radial-gradient(ellipse at 50% 50%, #000, transparent 76%);
+    opacity: 0.6;
+  }
+  .thumb-glow { position: absolute; width: 240px; height: 240px; border-radius: 50%; filter: blur(44px); transition: transform 0.6s var(--ease); }
+  .project-card:hover .thumb-glow { transform: scale(1.18) translateY(-6px); }
+  .g1 .thumb { background: linear-gradient(145deg, #141a33, #0a0d17); }
+  .g1 .thumb-glow { background: rgba(124, 140, 255, 0.55); top: -60px; right: -30px; }
+  .g2 .thumb { background: linear-gradient(145deg, #122029, #090d13); }
+  .g2 .thumb-glow { background: rgba(34, 211, 238, 0.42); bottom: -80px; left: -40px; }
+  .g3 .thumb { background: linear-gradient(145deg, #211532, #0c0916); }
+  .g3 .thumb-glow { background: rgba(192, 132, 252, 0.45); top: -50px; left: 30%; }
+  .g4 .thumb { background: linear-gradient(145deg, #13241d, #09110e); }
+  .g4 .thumb-glow { background: rgba(52, 211, 153, 0.32); bottom: -70px; right: 20%; }
+  .thumb-num {
+    position: absolute;
+    bottom: 10px;
+    left: 24px;
+    font-family: var(--font-head);
+    font-size: 4.6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: rgba(255, 255, 255, 0.075);
+    transition: color 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+  .project-card:hover .thumb-num { color: rgba(255, 255, 255, 0.14); transform: translateY(-3px); }
+  .thumb-badge {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(5, 7, 13, 0.55);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d5dced;
+  }
+  .thumb-badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); display: block; }
+  .thumb-icon {
+    position: absolute;
+    right: 24px;
+    bottom: 22px;
+    width: 44px;
+    height: 44px;
+    color: rgba(255, 255, 255, 0.5);
+    transition: transform 0.5s var(--ease), color 0.4s var(--ease);
+  }
+  .project-card:hover .thumb-icon { transform: translate(3px, -3px) rotate(-4deg); color: rgba(255, 255, 255, 0.9); }
+  .project-body { display: flex; flex-direction: column; flex: 1; padding: 26px; }
+  .project-body h3 { font-size: 1.28rem; margin-bottom: 10px; }
+  .project-body p { color: var(--muted); font-size: 0.93rem; margin-bottom: 20px; }
+  .project-body .chips { margin-bottom: 22px; }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent-2);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: gap 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .project-link svg { width: 16px; height: 16px; transition: transform 0.25s var(--ease); }
+  .project-link:hover { gap: 12px; color: #7ef0ff; }
+  .project-link:hover svg { transform: translateX(2px); }
+
+  .timeline { position: relative; padding-left: 34px; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 8px;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(124, 140, 255, 0.65), rgba(34, 211, 238, 0.35), transparent);
+  }
+  .timeline-item { position: relative; padding-bottom: 30px; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -34px;
+    top: 7px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    border: 1px solid rgba(124, 140, 255, 0.6);
+    background: #0a0c13;
+    display: grid;
+    place-items: center;
+  }
+  .timeline-dot::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--gradient); }
+  .timeline-card {
+    padding: 24px 26px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: linear-gradient(170deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012));
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .timeline-card:hover { border-color: rgba(124, 140, 255, 0.35); transform: translateX(4px); }
+  .timeline-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 18px; margin-bottom: 6px; }
+  .timeline-top h3 { font-size: 1.08rem; }
+  .timeline-date { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; color: var(--accent-2); white-space: nowrap; }
+  .timeline-company { color: var(--muted); font-size: 0.88rem; margin-bottom: 14px; }
+  .timeline-card ul { display: grid; gap: 7px; }
+  .timeline-card li { position: relative; padding-left: 17px; color: #aeb7ca; font-size: 0.9rem; }
+  .timeline-card li::before { content: ""; position: absolute; left: 0; top: 0.66em; width: 5px; height: 5px; border-radius: 50%; background: rgba(124, 140, 255, 0.75); }
+  .sample-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 26px;
+    padding: 9px 14px;
+    border-radius: 9px;
+    border: 1px dashed rgba(255, 255, 255, 0.14);
+    color: var(--muted-2);
+    font-size: 0.8rem;
+  }
+  .sample-note svg { width: 15px; height: 15px; flex: none; }
+
+  .contact-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
+  .contact-copy p { color: var(--muted); margin-bottom: 28px; max-width: 46ch; }
+  .contact-lines { display: grid; gap: 12px; margin-bottom: 28px; }
+  .contact-line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 15px 17px;
+    border-radius: 13px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .contact-line:hover { border-color: rgba(124, 140, 255, 0.38); background: rgba(255, 255, 255, 0.045); }
+  .contact-line .icon-box { width: 40px; height: 40px; border-radius: 11px; margin: 0; }
+  .contact-line .icon-box svg { width: 18px; height: 18px; }
+  .contact-line div span { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-2); }
+  .contact-line div strong { font-weight: 500; font-size: 0.92rem; color: #dfe5f1; word-break: break-word; }
+  .availability {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 11px;
+    border: 1px solid rgba(52, 211, 153, 0.22);
+    background: rgba(52, 211, 153, 0.06);
+    color: #9ff0c9;
+    font-size: 0.85rem;
+  }
+
+  .form-card {
+    position: relative;
+    padding: clamp(24px, 3vw, 34px);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012));
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .form-card::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -80px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.18), transparent 70%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-size: 0.8rem; font-weight: 500; color: #c4ccdd; letter-spacing: 0.01em; }
+  .field label .req { color: var(--accent-2); }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: rgba(5, 7, 13, 0.55);
+    color: var(--text);
+    font-size: 0.92rem;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .field textarea { resize: vertical; min-height: 126px; line-height: 1.6; }
+  .field select {
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, #98a2b8 50%), linear-gradient(135deg, #98a2b8 50%, transparent 50%);
+    background-position: calc(100% - 19px) 50%, calc(100% - 13px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 38px;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: #5b6478; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: rgba(124, 140, 255, 0.7);
+    background: rgba(8, 11, 20, 0.85);
+    box-shadow: 0 0 0 4px rgba(124, 140, 255, 0.12);
+  }
+  .field input[aria-invalid="true"],
+  .field textarea[aria-invalid="true"] { border-color: rgba(248, 113, 113, 0.75); box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.1); }
+  .field-error { min-height: 0; font-size: 0.76rem; color: #fca5a5; display: none; }
+  .field-error.show { display: block; }
+  .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 8px; }
+  .form-note { color: var(--muted-2); font-size: 0.76rem; max-width: 34ch; }
+  .form-success {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 13px 16px;
+    border-radius: 11px;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    background: rgba(52, 211, 153, 0.08);
+    color: #a7f3d0;
+    font-size: 0.88rem;
+  }
+  .form-success.show { display: flex; }
+  .form-success svg { width: 18px; height: 18px; flex: none; margin-top: 2px; }
+
+  .site-footer { position: relative; border-top: 1px solid var(--border); padding: 54px 0 30px; margin-top: 20px; }
+  .footer-top { display: grid; grid-template-columns: 1.4fr 0.8fr 0.8fr; gap: 34px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .footer-brand p { color: var(--muted); font-size: 0.9rem; max-width: 34ch; margin-top: 16px; }
+  .footer-col h4 { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 16px; }
+  .footer-col ul { display: grid; gap: 10px; }
+  .footer-col a { color: var(--muted); font-size: 0.9rem; transition: color 0.25s var(--ease); }
+  .footer-col a:hover { color: var(--accent-2); }
+  .socials { display: flex; gap: 10px; flex-wrap: wrap; }
+  .social-link {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--muted);
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  .social-link svg { width: 18px; height: 18px; }
+  .social-link:hover { color: var(--text); border-color: rgba(124, 140, 255, 0.5); background: rgba(124, 140, 255, 0.1); transform: translateY(-3px); }
+  .footer-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding-top: 26px; color: var(--muted-2); font-size: 0.82rem; }
+  .footer-bottom span { display: inline-flex; align-items: center; gap: 6px; }
+
+  .to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 180;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    border: 1px solid var(--border-strong);
+    background: rgba(10, 12, 19, 0.92);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: var(--text);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .to-top.show { opacity: 1; visibility: visible; transform: none; }
+  .to-top:hover { border-color: rgba(124, 140, 255, 0.6); }
+  .to-top svg { width: 19px; height: 19px; }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(3, 4, 9, 0.72);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+  }
+  .modal.open { opacity: 1; visibility: visible; }
+  .modal-panel {
+    position: relative;
+    width: min(640px, 100%);
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: clamp(26px, 4vw, 40px);
+    border-radius: 22px;
+    border: 1px solid var(--border-strong);
+    background: linear-gradient(165deg, #12151f, #0a0c13 70%);
+    box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9);
+    transform: translateY(16px) scale(0.98);
+    transition: transform 0.35s var(--ease);
+  }
+  .modal.open .modal-panel { transform: none; }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+  .modal-close:hover { color: var(--text); background: rgba(255, 255, 255, 0.09); border-color: var(--border-strong); }
+  .modal-close svg { width: 17px; height: 17px; }
+  .modal-kicker { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-2); }
+  .modal-kicker i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); display: block; }
+  .modal-panel h3 { font-size: clamp(1.5rem, 3vw, 1.95rem); margin-bottom: 16px; padding-right: 40px; }
+  .modal-desc { color: var(--muted); font-size: 0.96rem; margin-bottom: 24px; }
+  .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .modal-grid h4,
+  .modal-panel > h4 { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 7px; }
+  .modal-grid p { color: #d6ddec; font-size: 0.9rem; }
+  .modal-list { display: grid; gap: 9px; margin: 0 0 24px; }
+  .modal-list li { position: relative; padding-left: 20px; color: #b7c0d3; font-size: 0.9rem; }
+  .modal-list li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 2px; background: var(--gradient); }
+  .modal-note { padding: 10px 14px; border-radius: 9px; border: 1px dashed rgba(255, 255, 255, 0.14); color: var(--muted-2); font-size: 0.76rem; margin-bottom: 24px; }
+  .modal-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  body.modal-open { overflow: hidden; }
+
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr 0.9fr; gap: 40px; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1.2fr 0.9fr 0.9fr; }
+  }
+
+  @media (max-width: 900px) {
+    .nav {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--border-strong);
+      background: rgba(10, 12, 19, 0.98);
+      box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.9);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.28s var(--ease), transform 0.28s var(--ease), visibility 0.28s var(--ease);
+    }
+    .nav.open { opacity: 1; visibility: visible; transform: none; }
+    .nav ul { flex-direction: column; align-items: stretch; gap: 2px; }
+    .nav-link { display: block; padding: 12px 14px; font-size: 0.95rem; }
+    .nav-link.active::after { display: none; }
+    .nav-link.active { background: rgba(124, 140, 255, 0.12); color: var(--text); }
+    .nav-cta { width: 100%; margin: 6px 0 0; }
+    .nav-toggle { display: flex; }
+
+    .hero { padding-top: 118px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 58px; }
+    .hero-copy { max-width: 680px; }
+    .hero-visual { max-width: 560px; }
+    .code-card { transform: none; }
+    .hero-visual:hover .code-card { transform: translateY(-3px); }
+
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 720px) {
+    .container { width: calc(100% - 36px); }
+    .skills-grid,
+    .services-grid,
+    .projects-grid { grid-template-columns: 1fr; }
+    .hero-actions { gap: 11px; }
+    .hero-actions .btn { flex: 1 1 auto; }
+    .form-grid { grid-template-columns: 1fr; }
+    .modal-grid { grid-template-columns: 1fr; }
+    .timeline { padding-left: 28px; }
+    .timeline-dot { left: -28px; }
+    .float-badge.one { top: -18px; right: 0; }
+    .float-badge.two { bottom: -18px; left: 0; }
+    .footer-top { grid-template-columns: 1fr; gap: 30px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: clamp(2.2rem, 11vw, 3rem); }
+    .hero-meta { gap: 8px 18px; font-size: 0.8rem; }
+    .thumb { height: 178px; }
+    .thumb-num { font-size: 3.7rem; }
+    .code { font-size: 0.7rem; }
+    .code-body { padding: 16px 14px 20px; }
+    .float-badge { font-size: 0.72rem; padding: 8px 11px; }
+    .section { padding: 68px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    .js .reveal { opacity: 1; transform: none; }
+    .js .reveal .bar-fill { transform: scaleX(1); }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home" aria-label="Alex Rivera, back to top">
+        <span class="brand-mark">AR</span>
+        <span class="brand-text">Alex <span>Rivera</span></span>
+      </a>
+
+      <nav class="nav" id="primaryNav" aria-label="Primary">
+        <ul>
+          <li><a class="nav-link" href="#home">Home</a></li>
+          <li><a class="nav-link" href="#about">About</a></li>
+          <li><a class="nav-link" href="#skills">Skills</a></li>
+          <li><a class="nav-link" href="#services">Services</a></li>
+          <li><a class="nav-link" href="#projects">Projects</a></li>
+          <li><a class="nav-link" href="#experience">Experience</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <a class="btn btn-primary btn-sm nav-cta" href="#contact">
+          Let's talk
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="hero-orbs" aria-hidden="true">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+        <span class="orb orb-3"></span>
+      </div>
+
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-role">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span class="role-text" id="roleText">Full-Stack Developer</span>
+          </p>
+          <h1>Turning complex ideas into <span class="grad">refined web experiences</span>.</h1>
+          <p class="hero-lead">
+            I'm Alex Rivera, a developer focused on clean architecture, thoughtful interaction,
+            and interfaces that feel effortless on every screen. From first sketch to production launch.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">
+              View my work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#contact">
+              Get in touch
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            </a>
+          </div>
+          <div class="hero-meta">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              Remote · Worldwide
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Open to opportunities
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 4l-4 16"/></svg>
+              HTML · CSS · JavaScript
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <span class="float-badge one">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+            Performance-first
+          </span>
+          <span class="float-badge two">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+            Responsive by default
+          </span>
+
+          <div class="code-card" aria-hidden="true">
+            <div class="code-top">
+              <span class="code-dots"><i></i><i></i><i></i></span>
+              <span class="code-file">developer.js</span>
+            </div>
+            <div class="code-body">
+              <pre class="code"><span class="num">1</span><span class="tok-key">const</span> <span class="tok-var">developer</span> <span class="tok-punc">=</span> <span class="tok-punc">{</span>
+<span class="num">2</span>  name<span class="tok-punc">:</span> <span class="tok-str">"Alex Rivera"</span><span class="tok-punc">,</span>
+<span class="num">3</span>  role<span class="tok-punc">:</span> <span class="tok-str">"Full-Stack Developer"</span><span class="tok-punc">,</span>
+<span class="num">4</span>  focus<span class="tok-punc">:</span> <span class="tok-punc">[</span><span class="tok-str">"UI"</span><span class="tok-punc">,</span> <span class="tok-str">"Speed"</span><span class="tok-punc">,</span> <span class="tok-str">"A11y"</span><span class="tok-punc">],</span>
+<span class="num">5</span>  available<span class="tok-punc">:</span> <span class="tok-key">true</span>
+<span class="num">6</span><span class="tok-punc">};</span>
+
+<span class="num">7</span><span class="tok-key">function</span> <span class="tok-fn">build</span><span class="tok-punc">(</span><span class="tok-var">idea</span><span class="tok-punc">)</span> <span class="tok-punc">{</span>
+<span class="num">8</span>  <span class="tok-key">return</span> <span class="tok-fn">design</span><span class="tok-punc">(</span><span class="tok-var">idea</span><span class="tok-punc">)</span>
+<span class="num">9</span>    <span class="tok-punc">.</span><span class="tok-fn">then</span><span class="tok-punc">(</span><span class="tok-var">code</span><span class="tok-punc">)</span>
+<span class="num">10</span>    <span class="tok-punc">.</span><span class="tok-fn">then</span><span class="tok-punc">(</span><span class="tok-var">refine</span><span class="tok-punc">)</span>
+<span class="num">11</span>    <span class="tok-punc">.</span><span class="tok-fn">then</span><span class="tok-punc">(</span><span class="tok-var">ship</span><span class="tok-punc">);</span>
+<span class="num">12</span><span class="tok-punc">}</span>
+
+<span class="num">13</span><span class="tok-com">// clean · fast · accessible</span></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="aboutTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">About me</span>
+          <h2 id="aboutTitle">A developer with an eye for <span class="grad">the details</span>.</h2>
+          <p>
+            I care about the small decisions that make a product feel considered — the spacing,
+            the motion, the way a layout holds together from a phone to a wide desktop.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-copy reveal">
+            <p>
+              I'm a <strong>full-stack developer</strong> who enjoys working where design and engineering meet.
+              My approach is simple: understand the problem, keep the code readable, and polish the
+              experience until it feels natural to use.
+            </p>
+            <p>
+              I build responsive interfaces with semantic HTML, maintainable CSS, and vanilla JavaScript,
+              and I'm comfortable working across the stack when a project calls for it. I value clear
+              communication, steady iteration, and shipping work that holds up over time.
+            </p>
+            <ul class="about-list">
+              <li>
+                <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg></span>
+                Semantic, accessible markup that works for everyone
+              </li>
+              <li>
+                <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg></span>
+                Scalable CSS architecture and reusable components
+              </li>
+              <li>
+                <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg></span>
+                Thoughtful, purposeful interaction design
+              </li>
+              <li>
+                <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg></span>
+                A performance-first mindset from the first commit
+              </li>
+            </ul>
+          </div>
+
+          <aside class="profile-card reveal" aria-label="Profile summary">
+            <div class="avatar-wrap">
+              <div class="avatar" aria-hidden="true">AR</div>
+              <div class="avatar-meta">
+                <strong>Alex Rivera</strong>
+                <span>Full-Stack Developer</span>
+              </div>
+            </div>
+            <dl class="fact-list">
+              <div class="fact"><dt>Role</dt><dd>Full-Stack Developer</dd></div>
+              <div class="fact"><dt>Location</dt><dd>Remote · Worldwide</dd></div>
+              <div class="fact"><dt>Focus</dt><dd>Product engineering</dd></div>
+              <div class="fact"><dt>Availability</dt><dd>Open to work</dd></div>
+              <div class="fact"><dt>Languages</dt><dd>English</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills" aria-labelledby="skillsTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Technical skills</span>
+          <h2 id="skillsTitle">Tools I use to <span class="grad">build and ship</span>.</h2>
+          <p>A practical toolkit built around the web platform, product design, and reliable delivery.</p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-card reveal">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-5 4 5 4M16 8l5 4-5 4"/></svg>
+              Frontend
+            </h3>
+            <div class="skill-row">
+              <div class="skill-label"><b>HTML5</b><span>Advanced</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:96%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>CSS3</b><span>Advanced</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:93%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>JavaScript</b><span>Advanced</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:90%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>TypeScript</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:82%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>React</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:84%"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+              Backend &amp; Tools
+            </h3>
+            <div class="skill-row">
+              <div class="skill-label"><b>Node.js</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:78%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>REST APIs</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:82%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>Git &amp; GitHub</b><span>Advanced</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:90%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>Testing</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:75%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>CI / CD</b><span>Working knowledge</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:72%"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg>
+              Design &amp; Quality
+            </h3>
+            <div class="skill-row">
+              <div class="skill-label"><b>Responsive Design</b><span>Advanced</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:94%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>Accessibility</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:88%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>Performance</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:86%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>Figma</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:80%"></span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label"><b>Design Systems</b><span>Proficient</span></div>
+              <div class="bar"><span class="bar-fill" style="--level:84%"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services" aria-labelledby="servicesTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Services</span>
+          <h2 id="servicesTitle">What I can <span class="grad">help you build</span>.</h2>
+          <p>From focused landing pages to complete product interfaces — built to last and easy to maintain.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card spot reveal">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-5 4 5 4M16 8l5 4-5 4"/></svg>
+            </div>
+            <h3>Web Development</h3>
+            <p>Production-ready websites and web applications built with clean, semantic code and modern web standards.</p>
+            <div class="chips"><span class="chip">Landing pages</span><span class="chip">Web apps</span><span class="chip">CMS</span></div>
+          </article>
+
+          <article class="service-card spot reveal">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            </div>
+            <h3>UI Engineering</h3>
+            <p>Turning designs into pixel-accurate, reusable components backed by a consistent set of design tokens.</p>
+            <div class="chips"><span class="chip">Design systems</span><span class="chip">Components</span><span class="chip">Motion</span></div>
+          </article>
+
+          <article class="service-card spot reveal">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 1 0-9-9"/><path d="M3 12h6M12 3v6"/><path d="m9 15 2 2 4-4"/></svg>
+            </div>
+            <h3>Performance &amp; SEO</h3>
+            <p>Lean, fast-loading experiences with a focus on Core Web Vitals, clean markup, and discoverable content.</p>
+            <div class="chips"><span class="chip">Core Web Vitals</span><span class="chip">Audits</span><span class="chip">Optimization</span></div>
+          </article>
+
+          <article class="service-card spot reveal">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="13" height="10" rx="1.5"/><rect x="16" y="9" width="5.5" height="11" rx="1.5"/><path d="M7 18h4"/></svg>
+            </div>
+            <h3>Responsive Design</h3>
+            <p>Layouts that adapt gracefully across phones, tablets, laptops, and large displays — without horizontal scroll.</p>
+            <div class="chips"><span class="chip">Mobile-first</span><span class="chip">Fluid layouts</span><span class="chip">Breakpoints</span></div>
+          </article>
+
+          <article class="service-card spot reveal">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7V3M15 7V3"/><path d="M6 7h12v5a6 6 0 0 1-12 0V7Z"/><path d="M12 18v3"/></svg>
+            </div>
+            <h3>API Integration</h3>
+            <p>Connecting front ends to REST APIs, authentication flows, and third-party services with reliable error handling.</p>
+            <div class="chips"><span class="chip">REST</span><span class="chip">Auth</span><span class="chip">Data fetching</span></div>
+          </article>
+
+          <article class="service-card spot reveal">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2 2.3-2.3Z"/></svg>
+            </div>
+            <h3>Maintenance &amp; Support</h3>
+            <p>Ongoing improvements, refactors, accessibility fixes, and careful upgrades to keep your site healthy.</p>
+            <div class="chips"><span class="chip">Refactoring</span><span class="chip">Accessibility</span><span class="chip">Updates</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects" aria-labelledby="projectsTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Featured projects</span>
+          <h2 id="projectsTitle">Selected work &amp; <span class="grad">case studies</span>.</h2>
+          <p>A few sample concepts that show how I approach interface design, structure, and interaction.</p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card g1 reveal">
+            <div class="thumb" aria-hidden="true">
+              <span class="thumb-glow"></span>
+              <span class="thumb-badge"><i></i>Sample project</span>
+              <span class="thumb-num">01</span>
+              <svg class="thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M6 16v-5M11 16V8M16 16v-3M21 16V5"/></svg>
+            </div>
+            <div class="project-body">
+              <h3>Nebula Analytics</h3>
+              <p>A calm, data-dense dashboard concept with responsive charts, filterable tables, and a clear information hierarchy.</p>
+              <div class="chips"><span class="chip">Dashboard</span><span class="chip">Data viz</span><span class="chip">UI</span></div>
+              <button class="project-link" type="button" data-project="nebula" aria-haspopup="dialog">
+                View case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="project-card g2 reveal">
+            <div class="thumb" aria-hidden="true">
+              <span class="thumb-glow"></span>
+              <span class="thumb-badge"><i></i>Sample project</span>
+              <span class="thumb-num">02</span>
+              <svg class="thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="m6.7 7.3 3 2.9M17.3 7.3l-3 2.9M6.7 16.7l3-2.9M17.3 16.7l-3-2.9"/></svg>
+            </div>
+            <div class="project-body">
+              <h3>Orbit Design System</h3>
+              <p>A component library concept with tokens, documentation, and accessible building blocks for product teams.</p>
+              <div class="chips"><span class="chip">Design system</span><span class="chip">Components</span><span class="chip">Docs</span></div>
+              <button class="project-link" type="button" data-project="orbit" aria-haspopup="dialog">
+                View case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="project-card g3 reveal">
+            <div class="thumb" aria-hidden="true">
+              <span class="thumb-glow"></span>
+              <span class="thumb-badge"><i></i>Sample project</span>
+              <span class="thumb-num">03</span>
+              <svg class="thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10 8-6 4 6 4M14 8l6 4-6 4"/></svg>
+            </div>
+            <div class="project-body">
+              <h3>Pulse API Platform</h3>
+              <p>A developer-facing platform concept with a clean landing page, interactive documentation, and code samples.</p>
+              <div class="chips"><span class="chip">Developer tools</span><span class="chip">Docs</span><span class="chip">Landing page</span></div>
+              <button class="project-link" type="button" data-project="pulse" aria-haspopup="dialog">
+                View case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="project-card g4 reveal">
+            <div class="thumb" aria-hidden="true">
+              <span class="thumb-glow"></span>
+              <span class="thumb-badge"><i></i>Sample project</span>
+              <span class="thumb-num">04</span>
+              <svg class="thumb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-5 0-8-3-8-7 0-3 2-5 4-6 0-2 1-4 3-4s3 2 3 4c2 1 4 3 4 6 0 4-3 7-6 7Z"/><path d="M12 21v-7"/></svg>
+            </div>
+            <div class="project-body">
+              <h3>Verdant Studio</h3>
+              <p>A responsive marketing site concept for a sustainability studio — editorial typography, soft motion, and fast loads.</p>
+              <div class="chips"><span class="chip">Marketing</span><span class="chip">Responsive</span><span class="chip">Brand</span></div>
+              <button class="project-link" type="button" data-project="verdant" aria-haspopup="dialog">
+                View case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience" aria-labelledby="experienceTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Work experience</span>
+          <h2 id="experienceTitle">A timeline of <span class="grad">growth and craft</span>.</h2>
+          <p>Roles and responsibilities are shown as placeholders — replace them with your own history.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-card">
+              <div class="timeline-top">
+                <h3>Senior Frontend Developer</h3>
+                <span class="timeline-date">20XX — Present</span>
+              </div>
+              <p class="timeline-company">Company Name · Remote</p>
+              <ul>
+                <li>Build and maintain responsive web interfaces using semantic HTML, modern CSS, and JavaScript.</li>
+                <li>Collaborate with designers to translate concepts into reusable, accessible components.</li>
+                <li>Review code, share patterns, and help keep the front-end codebase consistent.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-card">
+              <div class="timeline-top">
+                <h3>Frontend Developer</h3>
+                <span class="timeline-date">20XX — 20XX</span>
+              </div>
+              <p class="timeline-company">Company Name · Hybrid</p>
+              <ul>
+                <li>Developed product pages and internal tools from design handoff to production.</li>
+                <li>Improved component structure and reduced duplicated styles across the site.</li>
+                <li>Worked closely with backend developers to integrate APIs and handle edge cases.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-card">
+              <div class="timeline-top">
+                <h3>Junior Web Developer</h3>
+                <span class="timeline-date">20XX — 20XX</span>
+              </div>
+              <p class="timeline-company">Company Name · On-site</p>
+              <ul>
+                <li>Maintained client websites, fixed layout issues, and supported content updates.</li>
+                <li>Learned accessibility basics and applied them to everyday front-end work.</li>
+                <li>Contributed to shared documentation and small internal improvements.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <p class="sample-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+          Sample timeline — replace with your actual roles, companies, and dates.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="contactTitle">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-copy reveal">
+            <div class="section-head" style="margin-bottom: 28px;">
+              <span class="eyebrow">Contact</span>
+              <h2 id="contactTitle">Let's build something <span class="grad">worth shipping</span>.</h2>
+            </div>
+            <p>Have a project, a role, or an idea you'd like to talk through? Send a note and I'll get back to you.</p>
+
+            <div class="contact-lines">
+              <div class="contact-line">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                </div>
+                <div><span>Email</span><strong>hello@example.com</strong></div>
+              </div>
+              <div class="contact-line">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                </div>
+                <div><span>Location</span><strong>Remote · Worldwide</strong></div>
+              </div>
+              <div class="contact-line">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
+                </div>
+                <div><span>Preferred</span><strong>Email or the form</strong></div>
+              </div>
+            </div>
+
+            <div class="availability">
+              <span class="status-dot" aria-hidden="true"></span>
+              Currently open to new opportunities
+            </div>
+          </div>
+
+          <div class="form-card reveal">
+            <form id="contactForm" novalidate>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
+                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required aria-describedby="nameError" />
+                  <p class="field-error" id="nameError" aria-live="polite"></p>
+                </div>
+                <div class="field">
+                  <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required aria-describedby="emailError" />
+                  <p class="field-error" id="emailError" aria-live="polite"></p>
+                </div>
+                <div class="field full">
+                  <label for="topic">Project type</label>
+                  <select id="topic" name="topic">
+                    <option value="">Select an option</option>
+                    <option value="website">Website or landing page</option>
+                    <option value="app">Web application</option>
+                    <option value="design-system">Design system</option>
+                    <option value="other">Something else</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
+                  <textarea id="message" name="message" rows="5" placeholder="Tell me about the project, timeline, and goals…" required aria-describedby="messageError"></textarea>
+                  <p class="field-error" id="messageError" aria-live="polite"></p>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">
+                  Send message
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                </button>
+                <span class="form-note">Demo form: it validates locally and does not send data anywhere.</span>
+              </div>
+              <div class="form-success" id="formSuccess" role="status">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
+                <span>Thanks — your message looks good. Connect this form to a service to start receiving email.</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="#home" aria-label="Alex Rivera, back to top">
+            <span class="brand-mark">AR</span>
+            <span class="brand-text">Alex <span>Rivera</span></span>
+          </a>
+          <p>Full-stack developer building clean, accessible, high-performance web experiences.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <div class="socials">
+            <a class="social-link" href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (update link)" title="Replace with your GitHub profile">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+            </a>
+            <a class="social-link" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile (update link)" title="Replace with your LinkedIn profile">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a class="social-link" href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X profile (update link)" title="Replace with your X profile">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.39L6.5 22H3.38l7.24-8.28L2.8 2h6.4l4.42 5.84L18.9 2Zm-1.1 18.1h1.72L7.1 3.8H5.26L17.8 20.1Z"/></svg>
+            </a>
+            <a class="social-link" href="mailto:hello@example.com" aria-label="Send an email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; <span id="year">2026</span> Alex Rivera. All rights reserved.</span>
+        <span>Built with HTML, CSS &amp; vanilla JavaScript.</span>
+      </div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+  </button>
+
+  <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-panel" role="document">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close project details">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <span class="modal-kicker"><i></i><span id="modalKicker">Case study</span></span>
+      <h3 id="modalTitle">Project</h3>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <a class="btn btn-primary btn-sm" href="#contact" id="modalContact">Discuss a similar project</a>
+        <button class="btn btn-ghost btn-sm" type="button" id="modalDismiss">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      var header = document.getElementById('siteHeader');
+      var progress = document.getElementById('scrollProgress');
+      var toTop = document.getElementById('toTop');
+      var nav = document.getElementById('primaryNav');
+      var navToggle = document.getElementById('navToggle');
+      var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+      var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+
+      function setMenu(open) {
+        nav.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      }
+
+      navToggle.addEventListener('click', function () {
+        setMenu(!nav.classList.contains('open'));
+      });
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () { setMenu(false); });
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!nav.classList.contains('open')) { return; }
+        if (nav.contains(event.target) || navToggle.contains(event.target)) { return; }
+        setMenu(false);
+      });
+
+      var ticking = false;
+
+      function onScroll() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var ratio = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+        progress.style.width = (ratio * 100) + '%';
+        header.classList.toggle('scrolled', scrollTop > 8);
+        toTop.classList.toggle('show', scrollTop > 640);
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+      onScroll();
+
+      toTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      });
+
+      var revealItems = document.querySelectorAll('.reveal');
+
+      if ('IntersectionObserver' in window) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
+        revealItems.forEach(function (item) { revealObserver.observe(item); });
+      } else {
+        revealItems.forEach(function (item) { item.classList.add('in'); });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var navObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) { return; }
+            var id = entry.target.getAttribute('id');
+            navLinks.forEach(function (link) {
+              var isActive = link.getAttribute('href') === '#' + id;
+              link.classList.toggle('active', isActive);
+              if (isActive) {
+                link.setAttribute('aria-current', 'page');
+              } else {
+                link.removeAttribute('aria-current');
+              }
+            });
+          });
+        }, { rootMargin: '-42% 0px -52% 0px', threshold: 0 });
+        sections.forEach(function (section) { navObserver.observe(section); });
+      }
+
+      var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      if (canHover && !reduceMotion.matches) {
+        document.querySelectorAll('.spot').forEach(function (card) {
+          card.addEventListener('pointermove', function (event) {
+            var rect = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (event.clientX - rect.left) + 'px');
+            card.style.setProperty('--my', (event.clientY - rect.top) + 'px');
+          });
+        });
+      }
+
+      var roles = ['Full-Stack Developer', 'UI Engineer', 'Web Performance Nerd', 'Problem Solver'];
+      var roleText = document.getElementById('roleText');
+
+      if (roleText && !reduceMotion.matches && roles.length > 1) {
+        var roleIndex = 0;
+        window.setInterval(function () {
+          roleText.classList.add('swap');
+          window.setTimeout(function () {
+            roleIndex = (roleIndex + 1) % roles.length;
+            roleText.textContent = roles[roleIndex];
+            roleText.classList.remove('swap');
+          }, 300);
+        }, 3400);
+      }
+
+      var projectData = {
+        nebula: {
+          kicker: 'Case study · Dashboard',
+          title: 'Nebula Analytics',
+          desc: 'A data-dense analytics dashboard concept designed to stay readable under pressure. The layout groups metrics by priority, keeps filters within reach, and adapts the chart grid from desktop to mobile without losing context.',
+          role: 'Design & front-end',
+          stack: 'HTML · CSS · JavaScript',
+          points: [
+            'Responsive dashboard grid with a clear visual hierarchy.',
+            'Filter and date-range controls designed for quick scanning.',
+            'Accessible charts, tables, and keyboard-friendly controls.',
+            'Calm dark palette that keeps long sessions comfortable.'
+          ]
+        },
+        orbit: {
+          kicker: 'Case study · Design system',
+          title: 'Orbit Design System',
+          desc: 'A component library concept that gives product teams a shared language. Tokens define color, spacing, type, and motion, while documented components keep new screens consistent and accessible by default.',
+          role: 'Design systems & components',
+          stack: 'HTML · CSS · JavaScript',
+          points: [
+            'Reusable components built on shared design tokens.',
+            'Documentation pages with usage guidance and states.',
+            'Accessible focus, keyboard, and reduced-motion behavior.',
+            'Naming and structure that scales with the product.'
+          ]
+        },
+        pulse: {
+          kicker: 'Case study · Developer tools',
+          title: 'Pulse API Platform',
+          desc: 'A developer-facing platform concept with a focused landing page and clear documentation. Code samples, copyable endpoints, and a straightforward navigation structure help developers find what they need quickly.',
+          role: 'Front-end & documentation UX',
+          stack: 'HTML · CSS · JavaScript',
+          points: [
+            'Landing page structured around a single clear action.',
+            'Documentation layout with persistent section navigation.',
+            'Readable code blocks with copy-to-clipboard affordance.',
+            'Fast, lightweight pages with no framework overhead.'
+          ]
+        },
+        verdant: {
+          kicker: 'Case study · Marketing site',
+          title: 'Verdant Studio',
+          desc: 'A marketing site concept for a sustainability studio. Editorial typography, restrained motion, and generous whitespace give the brand room to breathe while keeping the page fast and easy to navigate.',
+          role: 'Design & front-end',
+          stack: 'HTML · CSS · JavaScript',
+          points: [
+            'Editorial layout with strong type and clear rhythm.',
+            'Responsive sections that hold up from mobile to desktop.',
+            'Subtle reveal and hover interactions with reduced-motion support.',
+            'Optimized structure for fast loading and SEO.'
+          ]
+        }
+      };
+
+      var modal = document.getElementById('projectModal');
+      var modalPanel = modal.querySelector('.modal-panel');
+      var modalTitle = document.getElementById('modalTitle');
+      var modalKicker = document.getElementById('modalKicker');
+      var modalBody = document.getElementById('modalBody');
+      var modalClose = document.getElementById('modalClose');
+      var modalDismiss = document.getElementById('modalDismiss');
+      var modalContact = document.getElementById('modalContact');
+      var lastFocused = null;
+
+      function makeEl(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) { node.className = className; }
+        if (text) { node.textContent = text; }
+        return node;
+      }
+
+      function renderProject(data) {
+        modalBody.textContent = '';
+        modalBody.appendChild(makeEl('p', 'modal-desc', data.desc));
+
+        var grid = makeEl('div', 'modal-grid');
+        var roleBlock = makeEl('div', '');
+        roleBlock.appendChild(makeEl('h4', '', 'Role'));
+        roleBlock.appendChild(makeEl('p', '', data.role));
+        var stackBlock = makeEl('div', '');
+        stackBlock.appendChild(makeEl('h4', '', 'Stack'));
+        stackBlock.appendChild(makeEl('p', '', data.stack));
+        grid.appendChild(roleBlock);
+        grid.appendChild(stackBlock);
+        modalBody.appendChild(grid);
+
+        modalBody.appendChild(makeEl('h4', '', 'Highlights'));
+        var list = makeEl('ul', 'modal-list');
+        data.points.forEach(function (point) {
+          list.appendChild(makeEl('li', '', point));
+        });
+        modalBody.appendChild(list);
+        modalBody.appendChild(makeEl('p', 'modal-note', 'Sample project content for this portfolio template.'));
+      }
+
+      function openModal(id, trigger) {
+        var data = projectData[id];
+        if (!data) { return; }
+        lastFocused = trigger || document.activeElement;
+        modalTitle.textContent = data.title;
+        modalKicker.textContent = data.kicker;
+        renderProject(data);
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        setMenu(false);
+        window.setTimeout(function () { modalClose.focus(); }, 40);
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+          lastFocused.focus();
+        }
+      }
+
+      document.querySelectorAll('[data-project]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          openModal(button.getAttribute('data-project'), button);
+        });
+      });
+
+      modalClose.addEventListener('click', closeModal);
+      modalDismiss.addEventListener('click', closeModal);
+      modalContact.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) { closeModal(); }
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (!modal.classList.contains('open')) {
+          if (event.key === 'Escape' && nav.classList.contains('open')) {
+            setMenu(false);
+            navToggle.focus();
+          }
+          return;
+        }
+
+        if (event.key === 'Escape') {
+          closeModal();
+          return;
+        }
+
+        if (event.key !== 'Tab') { return; }
+        var focusables = Array.prototype.slice.call(
+          modalPanel.querySelectorAll('a[href], button:not([disabled])')
+        ).filter(function (item) { return item.offsetParent !== null; });
+        if (!focusables.length) { return; }
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+
+      var form = document.getElementById('contactForm');
+      var success = document.getElementById('formSuccess');
+      var nameInput = document.getElementById('name');
+      var emailInput = document.getElementById('email');
+      var messageInput = document.getElementById('message');
+      var nameError = document.getElementById('nameError');
+      var emailError = document.getElementById('emailError');
+      var messageError = document.getElementById('messageError');
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function setFieldState(input, errorEl, message) {
+        if (message) {
+          errorEl.textContent = message;
+          errorEl.classList.add('show');
+          input.setAttribute('aria-invalid', 'true');
+          return false;
+        }
+        errorEl.textContent = '';
+        errorEl.classList.remove('show');
+        input.removeAttribute('aria-invalid');
+        return true;
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var firstInvalid = null;
+
+        var nameOk = setFieldState(
+          nameInput,
+          nameError,
+          nameInput.value.trim().length >= 2 ? '' : 'Please enter your name (at least 2 characters).'
+        );
+        if (!nameOk) { firstInvalid = firstInvalid || nameInput; }
+
+        var emailOk = setFieldState(
+          emailInput,
+          emailError,
+          emailPattern.test(emailInput.value.trim()) ? '' : 'Please enter a valid email address.'
+        );
+        if (!emailOk) { firstInvalid = firstInvalid || emailInput; }
+
+        var messageOk = setFieldState(
+          messageInput,
+          messageError,
+          messageInput.value.trim().length >= 10 ? '' : 'Please add a message of at least 10 characters.'
+        );
+        if (!messageOk) { firstInvalid = firstInvalid || messageInput; }
+
+        if (firstInvalid) {
+          success.classList.remove('show');
+          firstInvalid.focus();
+          return;
+        }
+
+        success.classList.add('show');
+        form.reset();
+        setFieldState(nameInput, nameError, '');
+        setFieldState(emailInput, emailError, '');
+        setFieldState(messageInput, messageError, '');
+      });
+
+      nameInput.addEventListener('input', function () {
+        if (nameInput.getAttribute('aria-invalid') === 'true' && nameInput.value.trim().length >= 2) {
+          setFieldState(nameInput, nameError, '');
+        }
+      });
+
+      emailInput.addEventListener('input', function () {
+        if (emailInput.getAttribute('aria-invalid') === 'true' && emailPattern.test(emailInput.value.trim())) {
+          setFieldState(emailInput, emailError, '');
+        }
+      });
+
+      messageInput.addEventListener('input', function () {
+        if (messageInput.getAttribute('aria-invalid') === 'true' && messageInput.value.trim().length >= 10) {
+          setFieldState(messageInput, messageError, '');
+        }
+      });
+
+      var yearEl = document.getElementById('year');
+      if (yearEl) { yearEl.textContent = String(new Date().getFullYear()); }
+    })();
+  </script>
+</body>
+</html>
